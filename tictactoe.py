@@ -27,7 +27,7 @@ def player(board):
     empty_counter = 0
     for i in range(3):
         for j in range(3):
-            if board[i][j] == None:
+            if board[i][j] == EMPTY:
                 empty_counter += 1
     if empty_counter % 2 == 0:
         return O
@@ -41,7 +41,7 @@ def actions(board):
     actions = []
     for i in range(3):
         for j in range(3):
-            if board[i][j] == None:
+            if board[i][j] == EMPTY:
                 actions.append([i,j])
     return actions
 
@@ -56,7 +56,7 @@ def result(board, action):
     # 与えられた座標をPlayerの文字(XかO)にする
     if action[0] < 0 or action[0] > 2 or action[1] < 0 or action[1] > 2:
         raise ValueError
-    elif new_board[action[0]][action[1]] != None:
+    elif new_board[action[0]][action[1]] != EMPTY:
         raise ValueError
     new_board[action[0]][action[1]] = x_or_o
     return new_board
@@ -69,18 +69,18 @@ def winner(board):
     for i in range(3):
         # 横に３つ並んでないかの確認
         if board[i][0] == board[i][1] and board[i][1] == board[i][2]:
-            if board[i][0] != None:
+            if board[i][0] != EMPTY:
                 return board[i][0]
         # 縦に３つ並んでないかの確認
         if board[0][i] == board[1][i] and board[1][i] == board[2][i]:
-            if board[0][i] != None:
+            if board[0][i] != EMPTY:
                 return board[0][i]
     # ななめに３つ並んでないかの確認
     if board[0][0] == board[1][1] and board[1][1] == board[2][2]:
-        if board[0][0] != None:
+        if board[0][0] != EMPTY:
             return board[0][0]
     if board[0][2] == board[1][1] and board[1][1] == board[2][0]:
-        if board[0][2] != None:
+        if board[0][2] != EMPTY:
             return board[0][0]
     return None
 
@@ -92,7 +92,7 @@ def terminal(board):
     empty_counter = 0
     for i in range(3):
         for j in range(3):
-            if board[i][j] == None:
+            if board[i][j] == EMPTY:
                 empty_counter += 1
     if empty_counter == 0:
         return True
@@ -146,7 +146,7 @@ def Max_value(board):
         if a == 1:
             return a
         if v < a:
-            v = a.copy()
+            v = a
     return v
 
 def Min_value(board):
@@ -158,5 +158,5 @@ def Min_value(board):
         if a == -1:
             return a
         if v > a:
-            v = a.copy()
+            v = a
     return v
