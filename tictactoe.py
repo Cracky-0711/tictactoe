@@ -52,7 +52,7 @@ def result(board, action):
     """
     # player関数でプレイヤーを確認
     x_or_o = player(board)
-    new_board = board.copy()
+    new_board = copy.deepcopy(board)
     # 与えられた座標をPlayerの文字(XかO)にする
     if action[0] < 0 or action[0] > 2 or action[1] < 0 or action[1] > 2:
         raise ValueError
@@ -81,7 +81,7 @@ def winner(board):
             return board[0][0]
     if board[0][2] == board[1][1] and board[1][1] == board[2][0]:
         if board[0][2] != EMPTY:
-            return board[0][0]
+            return board[0][2]
     return None
 
 
@@ -125,15 +125,15 @@ def minimax(board):
         for a in actions(board):
             n = Min_value(result(board, a))
             if v < n:
-                v = n.copy()
-                action = a.copy()
+                v = n
+                action = copy.deepcopy(a)
     if player(board) == O:
         v = 2
         for a in actions(board):
             n = Max_value(result(board, a))
             if v > n:
-                v = n.copy()
-                action = a.copy()
+                v = n
+                action = copy.deepcopy(a)
     return action
         
     
@@ -153,7 +153,8 @@ def Min_value(board):
     v = 1
     if terminal(board):
         return utility(board)
-    for action in actions(board):
+    x = actions(board)
+    for action in x:
         a = Max_value(result(board, action))
         if a == -1:
             return a
